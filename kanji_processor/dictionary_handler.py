@@ -1,73 +1,84 @@
 # kanji_processor/dictionary_handler.py
 from jamdict import Jamdict
+import requests
 
 class DictionaryHandler:
     def __init__(self):
         self.jam = Jamdict()
-        # Updated POS mapping based on actual API responses
+        self.kanji_cache = {}  # Cache for kanji readings
         self.pos_mapping = {
             'noun (common) (futsuumeishi)': '名',
             'noun or participle which takes the aux. verb suru': 'する',
-            # "Godan verb with 'mu' ending": '他',  # Most godan verbs are 他動詞
-            'transitive verb': '他',
+            'verb': '自',
             'intransitive verb': '自',
-            'adjective (keiyoushi)': 'い',    # i-adjective
-            'adjectival nouns or quasi-adjectives': 'な',  # na-adjective
+            'transitive verb': '他',
+            'i-adjective': 'い',
+            'na-adjective': 'な',
             'adverb (fukushi)': '副'
         }
-    
+
     def get_word_info(self, word):
+        """Get word information from JMdict"""
         results = self.jam.lookup(word)
         if not results.entries:
             return {'reading': '', 'type': '', 'meaning': ''}
         
         entry = results.entries[0]
         
-        # Get reading from kana_forms
-        reading = entry.kana_forms[0].text if entry.kana_forms else ''
+        # Get reading
+        reading = ''
+        if entry.kana_forms:
+            reading = entry.kana_forms[0].text
         
-        # Get first sense
-        if not entry.senses:
-            return {'reading': reading, 'type': '', 'meaning': ''}
-        
-        sense = entry.senses[0]
-        
-        # Get type from POS tags
-        word_type = self._determine_type(sense.pos)
-        
-        # Get meaning (join all glosses from first sense)
-        meaning = '/'.join(g.text for g in sense.gloss)
+        # Get type and meaning from first sense
+        word_type = ''
+        meaning = ''
+        if entry.senses:
+            sense = entry.senses[0]
+            word_type = self._determine_type(sense.pos)
+            meaning = '; '.join(g.text for g in sense.gloss)
         
         return {
             'reading': reading,
             'type': word_type,
             'meaning': meaning
         }
-    
+
+    def get_kanji_readings(self, kanji):
+        """Get only kanji readings from kanjiapi.dev"""
+        # Check cache first
+        if kanji in self.kanji_cache:
+            return self.kanji_cache[kanji]
+
+        try:
+            response = requests.get(f"https://kanjiapi.dev/v1/kanji/{kanji}")
+            if response.status_code == 200:
+                data = response.json()
+                readings = {
+                    'on_yomi': ', '.join(data.get('on_readings', [])),
+                    'kun_yomi': ', '.join(data.get('kun_readings', []))
+                }
+                # Cache the result
+                self.kanji_cache[kanji] = readings
+                return readings
+        except Exception as e:
+            print(f"Error fetching kanji readings for {kanji}: {str(e)}")
+        
+        return {
+            'on_yomi': '',
+            'kun_yomi': ''
+        }
+
     def _determine_type(self, pos_tags):
         """Determine word type from POS tags"""
         if not pos_tags:
             return ''
         
-        # Check for する verb first
         if 'noun or participle which takes the aux. verb suru' in pos_tags:
             return 'する'
         
-        # Check for other types
         for tag in pos_tags:
             if tag in self.pos_mapping:
                 return self.pos_mapping[tag]
         
-        # Handle verbs
-        if any('verb' in tag.lower() for tag in pos_tags):
-            if any('transitive' in tag.lower() for tag in pos_tags):
-                return '他'
-            if any('intransitive' in tag.lower() for tag in pos_tags):
-                return '自'
-            return '他'  # default for verbs we're unsure about
-        
-        # Default to noun if nothing else matches
-        if any('noun' in tag.lower() for tag in pos_tags):
-            return '名'
-            
         return ''

@@ -4,10 +4,9 @@ import random
 
 class AnkiDeckGenerator:
     def __init__(self):
-        # Create a unique model ID and deck ID
-        self.model_id = random.randrange(1 << 30, 1 << 31)  # This creates a large random number
+        self.model_id = random.randrange(1 << 30, 1 << 31)
         self.model = genanki.Model(
-            model_id=self.model_id,  # Add model_id= explicitly
+            model_id=self.model_id,
             name='Kanji Model',
             fields=[
                 {'name': 'Kanji'},
@@ -25,17 +24,20 @@ class AnkiDeckGenerator:
                         <div class="kanji-character">{{Kanji}}</div>
                         
                         <div class="readings-section">
-                            <div class="on-yomi">
-                                {{OnYomi}}
+                            <div class="reading-box on-yomi">
+                                <div class="reading-label">音読み</div>
+                                <div class="reading-content">{{OnYomi}}</div>
                             </div>
                             
-                            <div class="kun-yomi">
-                                {{KunYomi}}
+                            <div class="reading-box kun-yomi">
+                                <div class="reading-label">訓読み</div>
+                                <div class="reading-content">{{KunYomi}}</div>
                             </div>
                         </div>
 
                         <div class="common-words-section">
-                            {{CommonWords}}
+                            <div class="section-label">常用例</div>
+                            <div class="words-content">{{CommonWords}}</div>
                         </div>
                     </div>
                 ''',
@@ -71,41 +73,59 @@ class AnkiDeckGenerator:
                     line-height: 1.5;
                 }
                 
-                .on-yomi {
-                    margin: 10px 0;
+                .reading-box {
+                    background-color: #3a3a3a;
+                    border-radius: 10px;
+                    padding: 15px;
+                    margin: 10px 40px;
                 }
                 
-                .kun-yomi {
-                    margin: 10px 0;
+                .reading-label {
+                    color: #888;
+                    font-size: 16px;
+                    margin-bottom: 5px;
+                }
+                
+                .reading-content {
+                    color: #fff;
                 }
                 
                 .common-words-section {
-                    margin: 30px 0;
+                    margin: 30px 40px;
                     text-align: left;
+                    background-color: #3a3a3a;
+                    border-radius: 10px;
+                    padding: 20px;
+                }
+                
+                .section-label {
+                    color: #888;
+                    font-size: 16px;
+                    margin-bottom: 15px;
                 }
                 
                 .word-item {
                     margin: 10px 0;
-                    font-size: 20px;
-                    line-height: 1.6;
+                    padding: 5px;
+                    border-bottom: 1px solid #4a4a4a;
                 }
                 
                 .word-reading {
-                    color: #cccccc;
+                    color: #aaa;
+                }
+                
+                .word-type {
+                    color: #888;
+                    font-size: 0.8em;
+                    margin-left: 5px;
+                    padding: 1px 4px;
+                    border: 1px solid #888;
+                    border-radius: 3px;
                 }
                 
                 .word-meaning {
                     color: #ff69b4;
                     margin-left: 10px;
-                }
-
-                .word-type {
-                    color: #808080;
-                    font-size: 0.8em;
-                    margin-left: 5px;
-                    padding: 1px 4px;
-                    border: 1px solid #808080;
-                    border-radius: 3px;
                 }
             '''
         )
@@ -114,14 +134,10 @@ class AnkiDeckGenerator:
         """Format common words with proper HTML structure"""
         formatted_words = []
         for word, details in words:
-            # Create the word type tag if it exists
-            word_type = details.get('type', '')
-            type_html = f'<span class="word-type">（{word_type}）</span>' if word_type else ''
-            
             word_html = f'''
                 <div class="word-item">
                     {word} <span class="word-reading">({details.get('reading', '')})</span>
-                    {type_html}
+                    <span class="word-type">（{details.get('type', '')}）</span>
                     <span class="word-meaning">{details.get('meaning', '')}</span>
                 </div>
             '''

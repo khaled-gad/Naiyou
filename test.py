@@ -91,13 +91,16 @@ def test_basic_functionality(input_file="input_text.txt", output_file="kanji_stu
                         continue
             
             if kanji_words:
+                # Get only kanji readings   
+                kanji_readings = dict_handler.get_kanji_readings(kanji)
+                
                 kanji_data.append({
                     'kanji': kanji,
-                    'on_yomi': 'オン',
-                    'kun_yomi': 'くん',
+                    'on_yomi': kanji_readings['on_yomi'],     # From kanjiapi.dev
+                    'kun_yomi': kanji_readings['kun_yomi'],   # From kanjiapi.dev
                     'common_words': sorted(kanji_words, 
-                                         key=lambda x: word_freq_dict.get(x[0], 0),
-                                         reverse=True)
+                                        key=lambda x: word_freq_dict.get(x[0], 0),
+                                        reverse=True)
                 })
         
         # Generate Anki deck
