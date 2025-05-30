@@ -99,4 +99,3 @@ This project is licensed under the MIT License - see the LICENSE file for detail
 ## Acknowledgments
 
 - Uses the JAMDict project for Japanese dictionary data
-- Inspired by the need for contextual kanji learning
