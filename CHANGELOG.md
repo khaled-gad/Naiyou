@@ -8,27 +8,40 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [Unreleased]
 
 ### Added
-- Comprehensive documentation
-- GitHub Pages site
+- Comprehensive documentation in the `docs/` directory
+- GitHub Pages site for better documentation accessibility
 - Contributing guidelines
+- Code of Conduct
 - FAQ section
-- Changelog
+- Development setup instructions
+- Pre-commit hooks for code quality
+- Type hints throughout the codebase
+- Test coverage reporting
 
 ### Changed
-- Improved README with detailed installation and usage instructions
-- Enhanced error handling and user feedback
-- Updated project structure and organization
+- Rebranded project from "Kanji Deck Generator" to "Naiyou (内容)"
+- Updated command-line interface from `generate-kanji-deck` to `naiyou`
+- Improved error handling and user feedback
+- Enhanced dictionary lookup reliability
+- Optimized card generation process
 
-## [0.1.0] - 2024-03-19
+### Fixed
+- Dictionary lookup failures for rare kanji
+- Memory usage during large text processing
+- Card template formatting issues
+- Encoding problems with non-UTF-8 input files
+
+## [0.1.0] - 2024-03-20
 
 ### Added
 - Initial release
 - Basic kanji extraction from text
-- Dictionary lookup for kanji readings and meanings
+- Dictionary lookup functionality
 - Anki deck generation
 - Command-line interface
-- Support for word conjugations
-- Frequency analysis of kanji and words
+- Support for UTF-8 text files
+- Basic error handling
+- Simple progress reporting
 
 ### Dependencies
 - fugashi for Japanese text tokenization

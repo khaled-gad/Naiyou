@@ -1,19 +1,19 @@
-# Kanji Deck Generator Documentation
+# Naiyou (内容) Documentation
 
-Welcome to the Kanji Deck Generator documentation! This tool helps you learn Japanese kanji by automatically generating Anki flashcards from any Japanese text you provide.
+Welcome to the Naiyou documentation! This tool helps you learn Japanese kanji by automatically generating Anki flashcards from any Japanese text you provide.
 
 ## Quick Start
 
 1. **Install the tool**:
    ```bash
-   pip install kanji-deck-generator
+   pip install naiyou
    ```
 
 2. **Create a text file** with Japanese content (e.g., `input.txt`)
 
 3. **Generate your deck**:
    ```bash
-   generate-kanji-deck -i input.txt
+   naiyou -i input.txt
    ```
 
 4. **Import the deck** into Anki
@@ -30,13 +30,13 @@ Welcome to the Kanji Deck Generator documentation! This tool helps you learn Jap
 
 1. **Using pip**:
    ```bash
-   pip install kanji-deck-generator
+   pip install naiyou
    ```
 
 2. **From source**:
    ```bash
-   git clone https://github.com/yourusername/kanji-deck-generator.git
-   cd kanji-deck-generator
+   git clone https://github.com/yourusername/naiyou.git
+   cd naiyou
    pip install -e .
    ```
 
@@ -45,14 +45,14 @@ Welcome to the Kanji Deck Generator documentation! This tool helps you learn Jap
 #### Basic Usage
 The simplest way to use the tool is:
 ```bash
-generate-kanji-deck -i input.txt
+naiyou -i input.txt
 ```
 This will create a deck named `kanji_deck.apkg` in the current directory.
 
 #### Advanced Usage
 For more control, you can use additional options:
 ```bash
-generate-kanji-deck -i input.txt -o my_deck.apkg -v
+naiyou -i input.txt -o my_deck.apkg -v
 ```
 
 #### Command Line Options

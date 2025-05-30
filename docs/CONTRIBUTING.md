@@ -1,48 +1,51 @@
-# Contributing to Kanji Deck Generator
+# Contributing to Naiyou
 
-Thank you for your interest in contributing to Kanji Deck Generator! This document provides guidelines and instructions for contributing.
+Thank you for your interest in contributing to Naiyou! This document provides guidelines and instructions for contributing to the project.
 
 ## Code of Conduct
 
-Please be respectful and considerate of others when contributing to this project.
+By participating in this project, you agree to abide by our Code of Conduct. Please read it before contributing.
 
-## How to Contribute
+## How Can I Contribute?
 
 ### Reporting Bugs
 
-1. Check if the bug has already been reported in the Issues section
-2. Create a new issue with:
-   - A clear, descriptive title
-   - Steps to reproduce the bug
-   - Expected behavior
-   - Actual behavior
-   - System information (OS, Python version, etc.)
-   - Any relevant error messages or logs
+Before creating bug reports, please check the issue list as you might find out that you don't need to create one. When you are creating a bug report, please include as many details as possible:
 
-### Suggesting Features
+- Use a clear and descriptive title
+- Describe the exact steps to reproduce the problem
+- Provide specific examples to demonstrate the steps
+- Describe the behavior you observed after following the steps
+- Explain which behavior you expected to see instead and why
+- Include screenshots if possible
+- Include the version of Python you're using
+- Include the version of Naiyou you're using
 
-1. Check if the feature has already been suggested
-2. Create a new issue with:
-   - A clear, descriptive title
-   - Detailed description of the feature
-   - Use cases and benefits
-   - Any relevant examples
+### Suggesting Enhancements
+
+If you have a suggestion for a new feature or enhancement, please:
+
+- Use a clear and descriptive title
+- Provide a detailed description of the proposed functionality
+- Explain why this enhancement would be useful
+- List any similar features in other applications
+- Include screenshots if applicable
 
 ### Pull Requests
 
-1. Fork the repository
-2. Create a new branch for your changes
-3. Make your changes
-4. Add tests if applicable
-5. Update documentation
-6. Submit a pull request
+1. Fork the repo and create your branch from `main`
+2. If you've added code that should be tested, add tests
+3. If you've changed APIs, update the documentation
+4. Ensure the test suite passes
+5. Make sure your code lints
+6. Issue that pull request!
 
 ## Development Setup
 
 1. Clone the repository:
    ```bash
-   git clone https://github.com/yourusername/kanji-deck-generator.git
-   cd kanji-deck-generator
+   git clone https://github.com/yourusername/naiyou.git
+   cd naiyou
    ```
 
 2. Create a virtual environment:
@@ -61,70 +64,57 @@ Please be respectful and considerate of others when contributing to this project
    pre-commit install
    ```
 
-## Code Style
-
-- Follow PEP 8 guidelines
-- Use type hints
-- Write docstrings for functions and classes
-- Keep functions small and focused
-- Write meaningful commit messages
-
 ## Testing
 
-1. Run tests:
-   ```bash
-   pytest
-   ```
+We use pytest for testing. To run the tests:
 
-2. Run linting:
-   ```bash
-   flake8
-   ```
+```bash
+pytest
+```
 
-3. Run type checking:
-   ```bash
-   mypy .
-   ```
+For coverage report:
+
+```bash
+pytest --cov=kanji_processor
+```
+
+## Code Style
+
+We use:
+- Black for code formatting
+- isort for import sorting
+- flake8 for linting
+- mypy for type checking
+
+The pre-commit hooks will run these automatically. You can also run them manually:
+
+```bash
+black .
+isort .
+flake8
+mypy .
+```
 
 ## Documentation
 
-- Update README.md for major changes
-- Add docstrings for new functions/classes
-- Update documentation in docs/ directory
-- Keep examples up to date
+We use Sphinx for documentation. To build the docs:
 
-## Project Structure
-
-```
-kanji-deck-generator/
-├── kanji_processor/
-│   ├── __init__.py
-│   ├── cli.py
-│   ├── text_parser.py
-│   ├── frequency_analyzer.py
-│   ├── dictionary_handler.py
-│   ├── anki_generator.py
-│   └── utils/
-├── tests/
-├── docs/
-├── README.md
-├── setup.py
-└── requirements.txt
+```bash
+cd docs
+make html
 ```
 
 ## Release Process
 
-1. Update version in setup.py
-2. Update CHANGELOG.md
+1. Update version in `setup.py`
+2. Update `CHANGELOG.md`
 3. Create a new release on GitHub
-4. Tag the release
-5. Build and upload to PyPI
+4. Build and upload to PyPI:
+   ```bash
+   python -m build
+   twine upload dist/*
+   ```
 
 ## Questions?
 
-Feel free to:
-- Open an issue
-- Contact the maintainers
-- Join the community discussions
-
-Thank you for contributing! 
+Feel free to open an issue for any questions you have about contributing. 

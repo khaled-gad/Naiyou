@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(
-    name="kanji-deck-generator",
+    name="naiyou",
     version="0.1.0",
     packages=find_packages(),
     install_requires=[
@@ -29,19 +29,19 @@ setup(
     },
     entry_points={
         'console_scripts': [
-            'generate-kanji-deck=kanji_processor.cli:main',
+            'naiyou=kanji_processor.cli:main',
         ],
     },
     author="Your Name",
     author_email="your.email@example.com",
-    description="A tool to generate Anki decks from Japanese text with kanji information",
+    description="Naiyou (内容) - Generate Anki decks from Japanese text with kanji information",
     long_description=long_description,
     long_description_content_type="text/markdown",
-    url="https://github.com/yourusername/kanji-deck-generator",
+    url="https://github.com/yourusername/naiyou",
     project_urls={
-        "Bug Tracker": "https://github.com/yourusername/kanji-deck-generator/issues",
-        "Documentation": "https://yourusername.github.io/kanji-deck-generator/",
-        "Source Code": "https://github.com/yourusername/kanji-deck-generator",
+        "Bug Tracker": "https://github.com/yourusername/naiyou/issues",
+        "Documentation": "https://yourusername.github.io/naiyou/",
+        "Source Code": "https://github.com/yourusername/naiyou",
     },
     classifiers=[
         "Development Status :: 4 - Beta",

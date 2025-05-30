@@ -1,4 +1,4 @@
-# Kanji Deck Generator
+# Naiyou (内容)
 
 A powerful tool that automatically generates Anki flashcards from Japanese text, helping you learn kanji in context.
 
@@ -17,8 +17,8 @@ A powerful tool that automatically generates Anki flashcards from Japanese text,
 
 1. Clone this repository:
 ```bash
-git clone https://github.com/yourusername/kanji-deck-generator.git
-cd kanji-deck-generator
+git clone https://github.com/yourusername/naiyou.git
+cd naiyou
 ```
 
 2. Create and activate a virtual environment (recommended):
@@ -36,12 +36,12 @@ pip install -e .
 
 Basic usage:
 ```bash
-generate-kanji-deck -i input.txt
+naiyou -i input.txt
 ```
 
 Advanced usage:
 ```bash
-generate-kanji-deck -i input.txt -o my_deck.apkg -v
+naiyou -i input.txt -o my_deck.apkg -v
 ```
 
 ### Command Line Arguments

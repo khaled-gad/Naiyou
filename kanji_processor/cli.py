@@ -83,13 +83,13 @@ def process_text(text, dict_handler, analyzer, verbose=False):
 def main():
     """Main entry point for the command line interface."""
     parser = argparse.ArgumentParser(
-        description='Generate Anki cards from Japanese text.',
+        description='Naiyou (内容) - Generate Anki flashcards from Japanese text.',
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  generate-kanji-deck -i input.txt
-  generate-kanji-deck -i input.txt -o my_deck.apkg
-  generate-kanji-deck -i input.txt -v
+  naiyou -i input.txt
+  naiyou -i input.txt -o my_deck.apkg
+  naiyou -i input.txt -v
         """
     )
     
