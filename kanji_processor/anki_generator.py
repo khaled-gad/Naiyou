@@ -1,6 +1,7 @@
 # kanji_processor/anki_generator.py
 import genanki
 import random
+from kanji_processor.utils.extract_joyo import JOYO_KANJI
 
 class AnkiDeckGenerator:
     def __init__(self):
@@ -129,11 +130,14 @@ class AnkiDeckGenerator:
                 }
             '''
         )
+    def is_joyo_kanji(self, kanji):
+        """Check if kanji is in Joyo set."""
+        return kanji in JOYO_KANJI
     
     def format_common_words(self, words):
         """Format common words with proper HTML structure"""
         formatted_words = []
-        for word, details in words:
+        for word, details in words[:10]:
             word_html = f'''
                 <div class="word-item">
                     {word} <span class="word-reading">({details.get('reading', '')})</span>
@@ -145,21 +149,39 @@ class AnkiDeckGenerator:
         return '\n'.join(formatted_words)
 
     def generate_deck(self, kanji_data, deck_name="Kanji Deck"):
-        deck_id = random.randrange(1 << 30, 1 << 31)
-        deck = genanki.Deck(deck_id, deck_name)
-        
-        for kanji_info in kanji_data:
-            note = genanki.Note(
-                model=self.model,
-                fields=[
-                    kanji_info['kanji'],
-                    kanji_info['on_yomi'],
-                    kanji_info['kun_yomi'],
-                    self.format_common_words(kanji_info['common_words'])
-                ])
-            deck.add_note(note)
-        
-        return deck
+            deck_id = random.randrange(1 << 30, 1 << 31)
+            deck = genanki.Deck(deck_id, deck_name)
+            
+            skipped_kanji = []
+            processed_kanji = []
+            
+            for kanji_info in kanji_data:
+                kanji = kanji_info['kanji']
+                
+                # Only create card if kanji is Joyo
+                if self.is_joyo_kanji(kanji):
+                    note = genanki.Note(
+                        model=self.model,
+                        fields=[
+                            kanji,
+                            kanji_info['on_yomi'],
+                            kanji_info['kun_yomi'],
+                            self.format_common_words(kanji_info['common_words'])
+                        ])
+                    deck.add_note(note)
+                    processed_kanji.append(kanji)
+                else:
+                    skipped_kanji.append(kanji)
+            
+            # Print summary
+            print(f"\nDeck Generation Summary:")
+            print(f"Processed {len(processed_kanji)} Joyo kanji")
+            print(f"Skipped {len(skipped_kanji)} non-Joyo kanji")
+            if skipped_kanji:
+                print(f"Skipped kanji: {''.join(skipped_kanji)}")
+            
+            return deck
+
     
     def save_deck(self, deck, filename="kanji_study.apkg"):
         """Save the deck to an Anki package file"""
