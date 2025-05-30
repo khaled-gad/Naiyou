@@ -1,3 +1,4 @@
+LICENSE
 README.md
 setup.py
 kanji_deck_generator.egg-info/PKG-INFO
@@ -15,5 +16,6 @@ kanji_processor/frequency_analyzer.py
 kanji_processor/text_parser.py
 kanji_processor/utils/__init__.py
 kanji_processor/utils/db_handler.py
+kanji_processor/utils/extract_joyo.py
 kanji_processor/utils/name_filter.py
 tests/test.py
